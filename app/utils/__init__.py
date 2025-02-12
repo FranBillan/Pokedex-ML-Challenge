@@ -1,3 +1,11 @@
+"""
+Módulo de inicialización de utilidades.
+Exporta funciones y decoradores incluyendo:
+- Decoradores para manejo de errores y procesos de autenticación
+- Funciones para crear respuestas HTTP
+- Mensajes de la API
+"""
+
 from .decorators import handle_api_errors, requires_auth
 from .responses import (
     create_response,

@@ -1,18 +1,28 @@
+"""
+Módulo de manejo de respuestas HTTP.
+Proporciona funciones para crear respuestas JSON consistentes y mensajes 
+predefinidos para diferentes situaciones de la API.
+"""
+
 from flask import Response
 import json
 from typing import Dict, Any, Union
+from app.utils.logger import get_logger
+
+logger = get_logger() #Recupera instancia de logger
 
 def create_response(data: Dict[str, Any], status_code: int = 200) -> Response:
     """
-    Crea una respuesta HTTP JSON consistente
+    Crea una respuesta HTTP JSON.
     
     Args:
-        data (Dict[str, Any]): Datos a enviar en la respuesta
-        status_code (int, optional): Código de estado HTTP. Defaults to 200.
+        data (Dict[str, Any]): Datos a enviar en la respuesta. Ej: body de un Pokemon obtenido.
+        status_code (int, optional): Código de estado HTTP. Default = 200.
         
     Returns:
-        Response: Respuesta HTTP formateada
+        Response: Respuesta HTTP.
     """
+    logger.debug(f'Generando respuesta HTTP - Status: {status_code} - Data: {data}')
     return Response(
         json.dumps(data, ensure_ascii=False),
         mimetype='application/json',
@@ -21,10 +31,10 @@ def create_response(data: Dict[str, Any], status_code: int = 200) -> Response:
 
 def create_auth_error_response() -> Dict[str, str]:
     """
-    Crea un mensaje de error para cuando falta el token de autenticación
+    Crea un mensaje de error para cuando falta el token de autenticación en la solicitud.
     
     Returns:
-        Dict[str, str]: Mensaje de error formateado
+        Dict[str, str]: Mensaje de error.
     """
     return {
         "error": "Esta función está disponible solo para entrenadores autorizados. Presentá tu ficha de entrenador.",
@@ -33,10 +43,10 @@ def create_auth_error_response() -> Dict[str, str]:
 
 def create_invalid_token_response() -> Dict[str, str]:
     """
-    Crea un mensaje de error para cuando el token es inválido
+    Crea un mensaje de error para cuando el token es inválido o está inactivo.
     
     Returns:
-        Dict[str, str]: Mensaje de error formateado
+        Dict[str, str]: Mensaje de error.
     """
     return {
         "error": "Ficha inactiva... ¿Te expulsaron de la liga? Tal vez solo tengas que tramitar una nueva.",
@@ -45,10 +55,10 @@ def create_invalid_token_response() -> Dict[str, str]:
 
 def get_welcome_message() -> Dict[str, str]:
     """
-    Obtiene el mensaje de bienvenida
+    Obtiene el mensaje de status y tip para redirigir al endpoint con funciones.
     
     Returns:
-        Dict[str, str]: Mensaje de bienvenida formateado
+        Dict[str, str]: Mensaje de bienvenida.
     """
     return {
         "mensaje": "¡Pokedex en línea, bienvenido!",
@@ -57,10 +67,10 @@ def get_welcome_message() -> Dict[str, str]:
 
 def get_pokedex_instructions() -> Dict[str, Union[str, list]]:
     """
-    Obtiene las instrucciones de uso de la Pokedex
+    Obtiene las instrucciones de uso de Pokedex.
     
     Returns:
-        Dict[str, Union[str, list]]: Instrucciones formateadas
+        Dict[str, Union[str, list]]: Instrucciones formateadas.
     """
     return {
         "mensaje": "¡Hola! A continuación, te detallo todas las funciones disponibles:",
