@@ -10,8 +10,9 @@ class APIError(Exception):
         self.suggestion = suggestion
         self.status_code = status_code
 
+"""
 class PokemonNotFoundError(APIError):
-    """Se lanza cuando no se encuentra un Pokémon"""
+
     def __init__(self, name: str):
         super().__init__(
             message=f"¡Ups! No conozco ese Pokémon... ¿es uno de los nuevos?",
@@ -20,7 +21,7 @@ class PokemonNotFoundError(APIError):
         )
 
 class TypeNotFoundError(APIError):
-    """Se lanza cuando no se encuentra un tipo de Pokémon"""
+
     def __init__(self, type_name: str):
         super().__init__(
             message=f"¡Ups! No conozco el tipo '{type_name}'",
@@ -29,7 +30,7 @@ class TypeNotFoundError(APIError):
         )
 
 class AuthenticationError(APIError):
-    """Se lanza cuando hay un error en la autenticación"""
+
     def __init__(self, is_missing_credentials: bool = False):
         if is_missing_credentials:
             message = "Se requiere username y password"
@@ -41,13 +42,14 @@ class AuthenticationError(APIError):
         super().__init__(message=message, suggestion=suggestion, status_code=401)
 
 class ConnectionError(APIError):
-    """Se lanza cuando hay problemas de conexión"""
+
     def __init__(self):
         super().__init__(
             message="¡Ups! Parece que hay problemas técnicos.",
             suggestion="Intentalo de nuevo en unos momentos.",
             status_code=503
         )
+"""
 
 def register_error_handlers(app: Flask):
     """
