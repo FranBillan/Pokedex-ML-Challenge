@@ -47,7 +47,7 @@ def handle_api_errors(f: Callable) -> Callable:
         except Exception as e:
             logger.error(f'Error no manejado en endpoint: {str(e)}')
             error_data = {
-                "error": "¡Ups! El Pokémon se escapó...",
+                "error": "¡Ups! El Pokemon se escapó...",
                 "sugerencia": "¡Intentalo de nuevo!"
             }
             return create_response(error_data, 500)

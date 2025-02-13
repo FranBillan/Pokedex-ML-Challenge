@@ -51,24 +51,24 @@ def get_pokemon(name):
     Endpoint para obtener información de un Pokemon específico por nombre.
     
     Args:
-        name (str): Nombre del Pokémon a buscar
+        name (str): Nombre del Pokemon a buscar
     
     Returns:
         Response: Información detallada del Pokemon o mensaje de error
         
     Status codes:
-        200: Pokémon encontrado
-        404: Pokémon no encontrado
+        200: Pokemon encontrado
+        404: Pokemon no encontrado
     """
-    logger.info(f'Buscando información del Pokémon: {name}')
+    logger.info(f'Buscando información del Pokemon: {name}')
     try:
         pokemon_data = pokemon_service.get_pokemon_by_name(name)
         logger.info(f'Información obtenida exitosamente para: {name}')
         return create_response(pokemon_data)
     except Exception as e:
-        logger.error(f'Error al buscar Pokémon {name}: {str(e)}')
+        logger.error(f'Error al buscar Pokemon {name}: {str(e)}')
         return create_response({
-            "error": "¡Ups! No conozco ese Pokémon... ¿es uno de los nuevos?",
+            "error": "¡Ups! No conozco ese Pokemon... ¿es uno de los nuevos?",
             "sugerencia": "Revisá que el nombre esté bien escrito."
         }, 404)
 
@@ -86,15 +86,15 @@ def get_available_types():
         200: Tipos obtenidos correctamente
         500: Error interno
     """
-    logger.info('Consultando tipos de Pokémon disponibles')
+    logger.info('Consultando tipos de Pokemon disponibles')
     try:
         types_data = pokemon_service.get_pokemon_types()
         if types_data:
-            logger.info('Tipos de Pokémon obtenidos exitosamente')
+            logger.info('Tipos de Pokemon obtenidos exitosamente')
             return create_response(types_data)
         raise Exception("No se obtuvieron datos de tipos")
     except Exception as e:
-        logger.error(f'Error al obtener tipos de Pokémon: {str(e)}')
+        logger.error(f'Error al obtener tipos de Pokemon: {str(e)}')
         return create_response({
             "error": "¡Ups! Parece que hay problemas técnicos.",
             "sugerencia": "Intentalo de nuevo en unos momentos."
@@ -114,17 +114,17 @@ def random_pokemon():
         200: Pokemon obtenido correctamente
         500: Error interno
     """
-    logger.info('Solicitando Pokémon aleatorio')
+    logger.info('Solicitando Pokemon aleatorio')
     try:
         pokemon_data = pokemon_service.get_random_pokemon()
         if pokemon_data:
-            logger.info(f'Pokémon aleatorio obtenido: {pokemon_data["pokemon"]["nombre"]}')
+            logger.info(f'Pokemon aleatorio obtenido: {pokemon_data["pokemon"]["nombre"]}')
             return create_response(pokemon_data)
-        raise Exception("No se obtuvieron datos del Pokémon aleatorio")
+        raise Exception("No se obtuvieron datos del Pokemon aleatorio")
     except Exception as e:
-        logger.error(f'Error al obtener Pokémon aleatorio: {str(e)}')
+        logger.error(f'Error al obtener Pokemon aleatorio: {str(e)}')
         return create_response({
-            "error": "¡Ups! El Pokémon se escapó...",
+            "error": "¡Ups! El Pokemon se escapó...",
             "sugerencia": "¡Intentalo de nuevo!"
         }, 500)
 
@@ -145,13 +145,13 @@ def random_pokemon_by_type(type):
         200: Pokemon encontrado
         404: Tipo de Pokemon no válido
     """
-    logger.info(f'Solicitando Pokémon aleatorio de tipo: {type}')
+    logger.info(f'Solicitando Pokemon aleatorio de tipo: {type}')
     try:
         pokemon_data = pokemon_service.get_random_pokemon_by_type(type)
-        logger.info(f'Pokémon aleatorio de tipo {type} obtenido: {pokemon_data["pokemon"]["nombre"]}')
+        logger.info(f'Pokemon aleatorio de tipo {type} obtenido: {pokemon_data["pokemon"]["nombre"]}')
         return create_response(pokemon_data)
     except Exception as e:
-        logger.error(f'Error al obtener Pokémon aleatorio de tipo {type}: {str(e)}')
+        logger.error(f'Error al obtener Pokemon aleatorio de tipo {type}: {str(e)}')
         return create_response({
             "error": f"¡Ups! No conozco el tipo '{type}'",
             "sugerencia": "Probá con tipos como 'fire', 'water', 'electric', etc."
@@ -171,16 +171,16 @@ def longest_name_pokemon(type):
         Response: Información del Pokemon con el nombre más largo del tipo especificado
         
     Status codes:
-        200: Pokémon encontrado
-        404: Tipo de Pokémon no válido
+        200: Pokemon encontrado
+        404: Tipo de Pokemon no válido
     """
-    logger.info(f'Buscando Pokémon con nombre más largo de tipo: {type}')
+    logger.info(f'Buscando Pokemon con nombre más largo de tipo: {type}')
     try:
         pokemon_data = pokemon_service.get_longest_name_pokemon_by_type(type)
-        logger.info(f'Encontrado Pokémon con nombre más largo de tipo {type}: {pokemon_data["pokemon"]["nombre"]}')
+        logger.info(f'Encontrado Pokemon con nombre más largo de tipo {type}: {pokemon_data["pokemon"]["nombre"]}')
         return create_response(pokemon_data)
     except Exception as e:
-        logger.error(f'Error al buscar Pokémon con nombre más largo de tipo {type}: {str(e)}')
+        logger.error(f'Error al buscar Pokemon con nombre más largo de tipo {type}: {str(e)}')
         return create_response({
             "error": f"¡Ups! No conozco el tipo '{type}'",
             "sugerencia": "Probá con tipos como 'fire', 'water', 'electric', etc."

@@ -86,7 +86,7 @@ class AuthService:
         Returns:
             bool: True si el token es válido, False en caso contrario
             
-        Example:
+        Ejemplo:
             >>> auth_service = AuthService()
             >>> if auth_service.validate_token(token):
             ...     print("Token válido")

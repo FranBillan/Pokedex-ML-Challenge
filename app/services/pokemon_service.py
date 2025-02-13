@@ -1,7 +1,7 @@
 """
-Módulo de servicio de Pokémon.
+Módulo de servicio de Pokemon.
 Proporciona una interfaz para interactuar con la PokeAPI y obtener información 
-sobre diferentes Pokémon y sus características.
+sobre diferentes Pokemon y sus características.
 """
 
 import requests
@@ -15,12 +15,6 @@ class PokemonService:
     """
     Servicio para interactuar con la PokeAPI.
     
-    Esta clase maneja:
-    - Consultas de información de Pokémon específicos
-    - Listado de tipos de Pokémon
-    - Búsquedas aleatorias
-    - Filtrado por tipo
-    
     Attributes:
         base_url (str): URL base de la PokeAPI
     """
@@ -28,7 +22,7 @@ class PokemonService:
     def __init__(self):
         """Inicializa el servicio con la URL base de la PokeAPI."""
         self.base_url = 'https://pokeapi.co/api/v2'
-        logger.debug('Servicio Pokémon inicializado')
+        logger.debug('Servicio Pokemon inicializado')
      
     def _make_request(self, url: str) -> requests.Response:
         """
@@ -44,7 +38,7 @@ class PokemonService:
             requests.exceptions.HTTPError: Si el recurso no existe (404)
             requests.exceptions.RequestException: Si hay problemas de conexión
             
-        Example:
+        Ejemplo:
             >>> response = self._make_request('https://pokeapi.co/api/v2/pokemon/pikachu')
             >>> data = response.json()
         """
@@ -60,23 +54,23 @@ class PokemonService:
     
     def get_pokemon_by_name(self, name: str) -> Dict:
         """
-        Obtiene información detallada de un Pokémon por su nombre.
+        Obtiene información detallada de un Pokemon por su nombre.
         
         Args:
-            name (str): Nombre del Pokémon
+            name (str): Nombre del Pokemon
             
         Returns:
-            Dict: Información detallada del Pokémon incluyendo tipos, stats y habilidades
+            Dict: Información detallada del Pokemon incluyendo tipos, stats y habilidades
             
-        Example:
+        Ejemplo:
             >>> pokemon_info = get_pokemon_by_name('pikachu')
             >>> print(pokemon_info['pokemon']['tipos'])
         """
-        logger.info(f'---Buscando información del Pokémon: {name}')
+        logger.info(f'---Buscando información del Pokemon: {name}')
         response = self._make_request(f'{self.base_url}/pokemon/{name.lower()}')
         data = response.json()
         
-        pokemon_info = {
+        return {
             "mensaje": f"¡Atrapaste a {name.capitalize()}! A continuación, te presento su información:",
             "pokemon": {
                 "nombre": data["name"],
@@ -102,10 +96,10 @@ class PokemonService:
 
     def get_pokemon_types(self) -> Dict:
         """
-        Obtiene todos los tipos de Pokémon disponibles
+        Obtiene todos los tipos de Pokemon disponibles
         
         Returns:
-            Dict: Lista de tipos de Pokémon
+            Dict: Lista de tipos de Pokemon
         """
         response = self._make_request(f'{self.base_url}/type')
         data = response.json()
@@ -117,20 +111,20 @@ class PokemonService:
         ]
         
         return {
-            "mensaje": "¡Estos son todos los tipos de Pokémon disponibles!",
+            "mensaje": "¡Estos son todos los tipos de Pokemon disponibles!",
             "tipos": valid_types,
             "consejo": "Podés usar estos tipos en endpoints como /whos-that-pokemon/<tipo> o /longest/<tipo>"
         }
     
     def get_pokemon_by_type(self, type_name: str) -> List[str]:
         """
-        Obtiene todos los Pokémon de un tipo específico
+        Obtiene todos los Pokemon de un tipo específico
         
         Args:
             type_name (str): Nombre del tipo
             
         Returns:
-            List[str]: Lista de nombres de Pokémon
+            List[str]: Lista de nombres de Pokemon
         """
         response = self._make_request(f'{self.base_url}/type/{type_name.lower()}')
         data = response.json()
@@ -138,17 +132,17 @@ class PokemonService:
     
     def get_random_pokemon(self) -> Dict:
         """
-        Obtiene un Pokémon aleatorio
+        Obtiene un Pokemon aleatorio
         
         Returns:
-            Dict: Información del Pokémon aleatorio
+            Dict: Información del Pokemon aleatorio
         """
         random_id = random.randint(1, 898)  # Límite de la PokeAPI
         response = self._make_request(f'{self.base_url}/pokemon/{random_id}')
         data = response.json()
         
         return {
-            "mensaje": "¡Un Pokémon salvaje apareció!",
+            "mensaje": "¡Un Pokemon salvaje apareció!",
             "pokemon": {
                 "nombre": data["name"],
                 "tipos": [t["type"]["name"] for t in data["types"]],
@@ -160,13 +154,13 @@ class PokemonService:
     
     def get_random_pokemon_by_type(self, type_name: str) -> Dict:
         """
-        Obtiene un Pokémon aleatorio de un tipo específico
+        Obtiene un Pokemon aleatorio de un tipo específico
         
         Args:
             type_name (str): Nombre del tipo
             
         Returns:
-            Dict: Información del Pokémon aleatorio
+            Dict: Información del Pokemon aleatorio
         """
         pokemons_of_type = self.get_pokemon_by_type(type_name)
         random_name = random.choice(pokemons_of_type)
@@ -175,7 +169,7 @@ class PokemonService:
         data = response.json()
         
         return {
-            "mensaje": f"¡Un Pokémon salvaje de tipo {type_name} apareció!",
+            "mensaje": f"¡Un Pokemon salvaje de tipo {type_name} apareció!",
             "pokemon": {
                 "nombre": data["name"],
                 "tipos": [t["type"]["name"] for t in data["types"]],
@@ -187,13 +181,13 @@ class PokemonService:
     
     def get_longest_name_pokemon_by_type(self, type_name: str) -> Dict:
         """
-        Obtiene el Pokémon con el nombre más largo de un tipo específico
+        Obtiene el Pokemon con el nombre más largo de un tipo específico
         
         Args:
             type_name (str): Nombre del tipo
             
         Returns:
-            Dict: Información del Pokémon
+            Dict: Información del Pokemon
         """
         pokemons = self.get_pokemon_by_type(type_name)
         longest_name = max(pokemons, key=len)
@@ -202,7 +196,7 @@ class PokemonService:
         data = response.json()
         
         return {
-            "mensaje": f"¡El Pokémon de tipo {type_name} con el nombre más largo es...",
+            "mensaje": f"¡El Pokemon de tipo {type_name} con el nombre más largo es...",
             "pokemon": {
                 "nombre": data["name"],
                 "tipos": [t["type"]["name"] for t in data["types"]],

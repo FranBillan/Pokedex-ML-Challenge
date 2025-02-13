@@ -23,7 +23,7 @@ def create_app():
     Returns:
         Flask: Aplicación configurada y lista para ejecutar
     """
-    logger.info('Iniciando creación de la aplicación Flask.')
+    logger.info('Iniciando creacion de la aplicacion Flask.')
     
     app = Flask(__name__) #Inicializa la aplicación Flask
     
@@ -38,5 +38,5 @@ def create_app():
     logger.debug('Configurando manejo de errores')
     register_error_handlers(app) #Configura el sistema de manejo de errores
     
-    logger.info('Aplicación Flask creada exitosamente.')
+    logger.info('Aplicacion Flask creada exitosamente.')
     return app

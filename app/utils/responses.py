@@ -77,7 +77,7 @@ def get_pokedex_instructions() -> Dict[str, Union[str, list]]:
         "funciones_disponibles": [
             {
                 "endpoint": "/pokedex/<nombre>",
-                "descripción": "¿Querés saber el tipo de un Pokémon? Dame su nombre.",
+                "descripción": "¿Querés saber el tipo de un Pokemon? Dame su nombre.",
                 "ejemplo": "/pokedex/serperior",
                 "método": "GET"
             },
@@ -89,19 +89,19 @@ def get_pokedex_instructions() -> Dict[str, Union[str, list]]:
             },
             {
                 "endpoint": "/pokedex/whos-that-pokemon",
-                "descripción": "¿No conoces muchos? Te sugiero un Pokémon completamente al azar.",
+                "descripción": "¿No conoces muchos? Te sugiero un Pokemon completamente al azar.",
                 "ejemplo": "/pokedex/whos-that-pokemon",
                 "método": "GET"
             },
             {
                 "endpoint": "/pokedex/whos-that-pokemon/<tipo>",
-                "descripción": "¿Tenés un tipo favorito? Te sugiero un Pokémon al azar de ese tipo.",
+                "descripción": "¿Tenés un tipo favorito? Te sugiero un Pokemon al azar de ese tipo.",
                 "ejemplo": "/pokedex/whos-that-pokemon/psychic",
                 "método": "GET"
             },
             {
                 "endpoint": "/pokedex/longest/<tipo>",
-                "descripción": "¿Curiosidad? Te digo cuál es el Pokémon con el nombre más largo de un tipo específico.",
+                "descripción": "¿Curiosidad? Te digo cuál es el Pokemon con el nombre más largo de un tipo específico.",
                 "ejemplo": "/pokedex/longest/water",
                 "método": "GET"
             }
