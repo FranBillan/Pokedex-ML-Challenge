@@ -1,2 +1,6 @@
 app/config/.env
 logs/pokedex.log
+Dockerfile
+.dockerignore
+Google Cloud -- PokeApi - MELI Challenge.postman_collection.json
+Localhost -- PokeApi - MELI Challenge.postman_collection.json
