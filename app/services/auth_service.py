@@ -41,7 +41,7 @@ class AuthService:
             
         Ejemplo:
             >>> auth_service = AuthService()
-            >>> token = auth_service.get_auth_token("ext_lmondinn", "contraseña")
+            >>> token = auth_service.get_auth_token("usuario", "contraseña")
             >>> if token:
             ...     print("Autenticación exitosa")
         """
