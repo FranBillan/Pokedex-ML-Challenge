@@ -154,53 +154,60 @@ class PokemonService:
     
     def get_random_pokemon_by_type(self, type_name: str) -> Dict:
         """
-        Obtiene un Pokemon aleatorio de un tipo específico
+        Obtiene un Pokemon aleatorio de un tipo específico (solo formas default)
         
         Args:
             type_name (str): Nombre del tipo
-            
+                
         Returns:
             Dict: Información del Pokemon aleatorio
         """
         pokemons_of_type = self.get_pokemon_by_type(type_name)
-        random_name = random.choice(pokemons_of_type)
         
-        response = self._make_request(f'{self.base_url}/pokemon/{random_name}')
-        data = response.json()
-        
-        return {
-            "mensaje": f"¡Un Pokemon salvaje de tipo {type_name} apareció!",
-            "pokemon": {
-                "nombre": data["name"],
-                "tipos": [t["type"]["name"] for t in data["types"]],
-                "altura": f"{data['height']/10} mt",
-                "peso": f"{data['weight']/10} kg",
-                "número_pokedex": data["id"]
-            }
-        }
+        while True:
+            random_name = random.choice(pokemons_of_type)
+            response = self._make_request(f'{self.base_url}/pokemon/{random_name}')
+            data = response.json()
+            
+            if data.get("is_default", False): #Verifica que sea un Pokemon base (no variaciones)
+                return {
+                    "mensaje": f"¡Un Pokemon salvaje de tipo {type_name} apareció!",
+                    "pokemon": {
+                        "nombre": data["name"],
+                        "tipos": [t["type"]["name"] for t in data["types"]],
+                        "altura": f"{data['height']/10} mt",
+                        "peso": f"{data['weight']/10} kg",
+                        "número_pokedex": data["id"]
+                    }
+                }
     
     def get_longest_name_pokemon_by_type(self, type_name: str) -> Dict:
         """
-        Obtiene el Pokemon con el nombre más largo de un tipo específico
+        Obtiene el Pokemon con el nombre más largo de un tipo específico (solo formas default)
         
         Args:
             type_name (str): Nombre del tipo
-            
+                
         Returns:
             Dict: Información del Pokemon
         """
-        pokemons = self.get_pokemon_by_type(type_name)
-        longest_name = max(pokemons, key=len)
+        pokemons = self.get_pokemon_by_type(type_name) #Obtiene todos los Pokemon de un tipo.
         
-        response = self._make_request(f'{self.base_url}/pokemon/{longest_name}')
-        data = response.json()
+        # Ordena lista por longitud de mayor a menor
+        sorted_names = sorted(pokemons, key=len, reverse=True)
         
-        return {
-            "mensaje": f"¡El Pokemon de tipo {type_name} con el nombre más largo es...",
-            "pokemon": {
-                "nombre": data["name"],
-                "tipos": [t["type"]["name"] for t in data["types"]],
-                "longitud_nombre": f"{len(data['name'])} caracteres",
-                "número_pokedex": data["id"]
-            }
-        }
+        # Itera en la lista hasta encontrar un Pokemon base (no variaciones)
+        for pokemon_name in sorted_names:
+            response = self._make_request(f'{self.base_url}/pokemon/{pokemon_name}')
+            data = response.json()
+            
+            if data.get("is_default", False):
+                return {
+                    "mensaje": f"¡El Pokemon de tipo {type_name} con el nombre más largo es...",
+                    "pokemon": {
+                        "nombre": data["name"],
+                        "tipos": [t["type"]["name"] for t in data["types"]],
+                        "longitud_nombre": f"{len(data['name'])} caracteres",
+                        "número_pokedex": data["id"]
+                    }
+                }
